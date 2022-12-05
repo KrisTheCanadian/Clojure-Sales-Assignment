@@ -52,8 +52,3 @@
   (println "This is added in here because `clojure app.clj` doesn't run the main function, so this is just an explicit call to it. To run the main function, run `clojure -m app.clj`")
   (-main))
 
-(comment 
-  ""
-  (-main)
-  )
-
