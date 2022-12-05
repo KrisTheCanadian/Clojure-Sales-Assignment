@@ -88,10 +88,10 @@ Enter an option?
       (last (str/split (first product) #"\|"))))
   )
 
-(defn display-customer-total-sales-amount-given-id
-  "Display the total sales for a given customer id"
+(defn calculate-customer-total
+  "Calculate the total sales for a given customer id"
   [id data] 
-  (println (reduce + (map #(let [saledetails (str/split % #"\|")]
+  (reduce + (map #(let [saledetails (str/split % #"\|")]
                     (if (= id (second saledetails))
                       (* (parse-double 
                           (get-item-price-given-id 
@@ -100,6 +100,12 @@ Enter an option?
                          (Integer/parseInt (last saledetails)))
                       0))
                  (get data :sale))))
+
+(defn display-customer-total-sales-amount-given-id
+  "Display the total sales for a given customer id"
+  [id data] 
+  (print "\nTotal Sales for Customer: " (get-customer-name-by-id id (get data :customer)))
+  (println "\n$" (calculate-customer-total id data))
   (wait-for-key)
   )
 
