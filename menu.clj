@@ -61,6 +61,15 @@ Enter an option?
       (second (str/split (first customer) #"\|"))))
   )
 
+(defn get-product-id-by-name 
+  "returns the product when given a name"
+  [name products]
+  (let [product (filter #(= name (second (str/split % #"\|"))) products)]
+    (if (empty? product)
+      "Unknown Product"
+      (first (str/split (first product) #"\|"))))
+  )
+
 (defn get-product-name-by-id
   "returns the product when given an id"
   [id products]
@@ -108,6 +117,19 @@ Enter an option?
   (println "\n$" (calculate-customer-total id data))
   (wait-for-key)
   )
+
+(defn display-sales-by-product-id
+  "Display the total sales for a given product id"
+  [id data] 
+  (print "Total Count: ")
+  (println (reduce + (map #(let [saledetails (str/split % #"\|")]
+                             (if (= id (nth saledetails 2))
+                               (Integer/parseInt (last saledetails))
+                               0))
+                          (get data :sale))))
+  (wait-for-key)
+  )
+
 
 (defn display-sales
   "Display sales table"
